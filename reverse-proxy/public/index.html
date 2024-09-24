@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Making Some requests!</h1>
+  <h3>Users</h3>
+  <di id="div-users">
+    </div>
+    <script>
+      const divUsers = document.getElementById('div-users');
+      fetch('/api/users').then(res => res.json()).then(data => {
+        divUsers.innerHTML = data.map(user => `<p>${user}</p>`).join('');
+      });
+    </script>
+</body>
+
+</html>

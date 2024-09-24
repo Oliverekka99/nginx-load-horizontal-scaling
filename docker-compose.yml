@@ -1,0 +1,31 @@
+name: ${PROJECT_NAME}
+services:
+
+  server:
+    pull_policy: build
+    image: my-node-i
+    build:
+      context: server
+      dockerfile: Dockerfile
+    env_file: .env
+    deploy:
+      replicas: 6
+    volumes:
+      - my-node-v:/server/node_modules
+
+  reverse-proxy:
+    pull_policy: build
+    image: my-nginx-i
+    container_name: ${NGINX_CONTAINER_NAME}
+    env_file: .env
+    build:
+      context: reverse-proxy
+      dockerfile: Dockerfile
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    depends_on:
+      - server
+
+volumes:
+  my-node-v:
+    name: my-node-v
